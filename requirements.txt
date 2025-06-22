@@ -36,3 +36,5 @@ typing_extensions==4.13.2
 urllib3==2.4.0
 xxhash==3.5.0
 zstandard==0.23.0
+tavily-python==0.3.3
+langchain-community==0.2.10
