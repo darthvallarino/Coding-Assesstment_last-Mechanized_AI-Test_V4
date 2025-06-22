@@ -38,12 +38,18 @@ class ResponderWithRetries:
                 self.validator.invoke(response)
                 return {"messages": response}
             except ValidationError as e:
-                # Fix: state is a dict, not a list. Append error info to messages instead.
+                error_message = f"{repr(e)}\n\nPay close attention to the function schema.\n\n"
+                # Add more specific feedback for common errors, like missing citations
+                if "references" in str(e) and "field required" in str(e).lower(): # new
+                    error_message += "It looks like 'references' field is missing or malformed. Ensure you provide a list of URLs from the search results for citations."
+                elif "answer" in str(e) and "word limit" in str(e).lower(): # new
+                     error_message += "Your answer is likely exceeding the word limit. Please make sure it's around 250 words."
+                
+                error_message += self.validator.schema_json() + " Respond by fixing all validation errors." # new
+                
                 state["messages"].append(
                     ToolMessage(
-                        content=f"{repr(e)}\n\nPay close attention to the function schema.\n\n"
-                        + self.validator.schema_json()
-                        + " Respond by fixing all validation errors.",
+                        content=error_message,
                         tool_call_id=getattr(response, 'tool_calls', [{}])[0].get("id", None),
                     )
                 )
