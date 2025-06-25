@@ -3,9 +3,7 @@
 ## Brainstorming and Prioritization
 
 1.  **Integrate a real web search tool (Tavily):**
-    * The most critical deficiency of the baseline was the lack of a real external information search capability. The current "search queries" merely fed back to the LLM, leading to citation hallucinations and ungrounded answers. Without access to external data, the agent cannot act as an "expert researcher."
-    * High. This change is fundamental to improving the accuracy and veracity of the response.
-    * Selected.
+    * The most critical deficiency of the baseline was the lack of a real external information search capability. The current "search queries" merely fed back to the LLM, leading to citation hallucinations and ungrounded answers. Without access to external data, the agent cannot act as an "expert researcher." This change is fundamental to improving the accuracy and veracity of the response.
 
 2.  **Enhance the `run_queries` function to process search results:**
     * Once a real search tool is integrated, how the results are presented to the LLM is crucial. Passing raw or inefficiently processed results could overwhelm the LLM or cause it to ignore important information. It is necessary to summarize and format the results in a useful way.
